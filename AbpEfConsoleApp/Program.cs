@@ -9,6 +9,8 @@ namespace AbpEfConsoleApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Specify the database name to shard:");
+            string dbName = Console.ReadLine();
             //Bootstrapping ABP system
             using (var bootstrapper = AbpBootstrapper.Create<MyConsoleAppModule>())
             {
@@ -21,7 +23,7 @@ namespace AbpEfConsoleApp
                 //Getting a Tester object from DI and running it
                 using (var tester = bootstrapper.IocManager.ResolveAsDisposable<Tester>())
                 {
-                    tester.Object.Run();
+                    tester.Object.StartSharding(dbName, DateTime.Now,DateTime.Now);
                 } //Disposes tester and all it's dependencies
 
                 Console.WriteLine("Press enter to exit...");
